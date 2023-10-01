@@ -1,8 +1,9 @@
 import { users, getUsers, sortUsers } from "./users.js";
 import { applyFilter } from "./filter.js";
+import { formHandle } from "./form.js";
 
 // ------ ELEMENTS
-
+console.log(users)
 const form = document.forms.addUser;
 const tablet = document.querySelector(".table-body");
 const thead = document.querySelector("thead");
@@ -17,38 +18,6 @@ init();
 // ------ EVENTS
 thead.addEventListener("click", sortUsersHandler);
 
-function formHandle(e) {
-  e.preventDefault();
-  // console.log(e.target)
-  // update
-  if (form.hasAttribute("data-id")) {
-    const currentUserIndex = users.findIndex(
-      (user) => user.id == form.getAttribute("data-id")
-    );
-
-    users[currentUserIndex].name = form.elements.name.value;
-    users[currentUserIndex].email = form.elements.email.value;
-    users[currentUserIndex].code = form.elements.code.value;
-
-    form.removeAttribute("data-id");
-  } else {
-    // add
-    const user = {
-      id: Math.max(...users.map((item) => item.id)) + 1,
-      name: form.elements.name.value,
-      email: form.elements.email.value,
-      code: form.elements.code.value,
-    };
-
-    console.log(Math.max(...users.map((item) => item.id)) + 1);
-    console.log(users);
-    users.push(user);
-  }
-
-  form.reset();
-  // logUsers();
-  createTable();
-}
 // ------ FUNCTIONS
 
 // function getInfo() {
@@ -268,7 +237,7 @@ form.addEventListener("submit", (event) => {
 function editUser(e) {
   const currentUser = users.find((item) => item.id == e.target.dataset.id);
   const currentRow = document.querySelector(
-    `[data-id='${e.target.dataset.id}']`
+    `.table-body > [data-id='${e.target.dataset.id}']`
   );
 
   currentRow.classList.add("row_edit");
