@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <title>Test</title>
+    <style>
+      @keyframes fadeOut {
+        0% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+      thead {
+        cursor: pointer;
+      }
+      .btn-dark {
+        transition: all 0.3s ease;
+      }
+      .btn-dark:hover,
+      .btn-dark:focus {
+        background-color: transparent;
+        color: black;
+      }
+
+      .btn-danger {
+        transition: all 0.3s ease;
+      }
+      .btn-danger:hover,
+      .btn-danger:focus {
+        background-color: transparent;
+        color: red;
+      }
+      .delete {
+        animation-name: fadeOut;
+        animation-duration: 0.5s;
+        animation-timing-function: ease-out;
+        animation-delay: 0s;
+        animation-fill-mode: forwards;
+      }
+      .row_edit {
+        background-color: rgba(207, 206, 206, 0.768);
+      }
+
+      .name-valid.valid-feedback,
+      .name-valid.invalid-feedback,
+      .email-valid.valid-feedback,
+      .email-valid.invalid-feedback,
+      .code-valid.valid-feedback,
+      .code-valid.invalid-feedback {
+        opacity: 1;
+      }
+
+      .name-valid,
+      .email-valid,
+      .code-valid {
+        opacity: 0;
+        font-size: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container py-4">
+      <div class="row">
+        <div class="col-4">
+          <form name="addUser" novalidate >
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="exampleInputPassword1"
+                name="name"
+                required
+              />
+              <div class="name-valid">Looks good!</div>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label"
+                >Email address</label
+              >
+              <input
+                type="email"
+                class="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+                name="email"
+                required
+              />
+              <div class="email-valid">
+                Looks good!
+              </div>
+        
+          
+              <div id="emailHelp" class="form-text">
+                We'll never share your email with anyone else.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="exampleCode1" class="form-label">Code</label>
+              <input
+                type="number"
+                class="form-control"
+                id="exampleInputCode1"
+                aria-describedby="code"
+                name="code"
+                required
+              />
+              <div class="code-valid">
+                Looks good!
+              </div>
+        
+          
+            </div>
+            <button type="submit" class="btn btn-primary" name="button">
+              Submit
+            </button>
+          </form>
+        </div>
+
+        <div class="col-8">
+          <form class="d-flex col-6 mb-4" role="search">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Filter"
+              aria-label="Search"
+            />
+          </form>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col" data-sort="id">#</th>
+                <th scope="col" data-sort="name">Name</th>
+                <th scope="col" data-sort="email">Email</th>
+                <th scope="col" data-sort="code">Code</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>
