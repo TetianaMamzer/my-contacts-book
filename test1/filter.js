@@ -1,6 +1,6 @@
 import { debounce } from './library.js';
 import { filterUsers } from './users.js';
-import { createTable } from './script.js';
+import { createTable } from './table.js';
 
 export const applyFilter = () => {
   const search = document.querySelector('[type="search"]');

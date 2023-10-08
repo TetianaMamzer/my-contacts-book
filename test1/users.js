@@ -38,4 +38,30 @@ function sortUsers(sort) {
   users.sort(sortFunc);
 }
 
-export {users, getUsers, filterUsers, sortUsers }
+function updateUser(user) {
+  const currentUserIndex = users.findIndex(
+    (item) => item.id == user.id
+  );
+
+  users[currentUserIndex].name = user.name;
+  users[currentUserIndex].email = user.email;
+  users[currentUserIndex].code = user.code;
+}
+
+function addUser(user) {
+  user.id = Math.max(...users.map((item) => item.id)) + 1;
+
+  users.push(user);
+}
+
+function deleteUser(id) {
+  const indexUser = users.findIndex((user) => user.id == id);
+  
+  users.splice(indexUser, 1);
+}
+
+function getUserById(id) {
+  return users.find((item) => item.id == id);
+
+}
+export {users, getUsers, filterUsers, sortUsers, updateUser, addUser, deleteUser, getUserById }
