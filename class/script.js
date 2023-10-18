@@ -1,20 +1,23 @@
 import { Users } from "./users.js";
 import { Filter} from "./filter.js";
-import { applyForm } from "./form.js";
-import { createTable } from "./table.js";
+import { Table } from "./table.js";
+import { Form } from "./form.js";
 
-const users = new Users();
-const filter = new Filter();
+class App {
+  constructor() {
+    this.users = new Users();
+    this.filter = new Filter();
+    this.table = new Table();
+    this.form = new Form();
 
-init();
+    this._init();
+  }
 
-async function init() {
-  await users.getUsers();
-  filter.applyFilter();
-  createTable();
-  applyForm();
+  async _init() {
+    await this.users.getUsers();
+    this.table.createTable();
+  }
+  
 }
 
-export {
-  users
-}
+export const app = new App();

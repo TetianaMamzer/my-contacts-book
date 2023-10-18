@@ -1,0 +1,56 @@
+
+     @keyframes fadeOut {
+        0% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+      thead {
+        cursor: pointer;
+      }
+      .btn-dark {
+        transition: all 0.3s ease;
+      }
+      .btn-dark:hover,
+      .btn-dark:focus {
+        background-color: transparent;
+        color: black;
+      }
+
+      .btn-danger {
+        transition: all 0.3s ease;
+      }
+      .btn-danger:hover,
+      .btn-danger:focus {
+        background-color: transparent;
+        color: red;
+      }
+      .delete {
+        animation-name: fadeOut;
+        animation-duration: 0.5s;
+        animation-timing-function: ease-out;
+        animation-delay: 0s;
+        animation-fill-mode: forwards;
+      }
+      .row_edit {
+        background-color: rgba(207, 206, 206, 0.768);
+      }
+
+      .name-valid.valid-feedback,
+      .name-valid.invalid-feedback,
+      .email-valid.valid-feedback,
+      .email-valid.invalid-feedback,
+      .code-valid.valid-feedback,
+      .code-valid.invalid-feedback {
+        opacity: 1;
+      }
+
+      .name-valid,
+      .email-valid,
+      .code-valid {
+        opacity: 0;
+        font-size: 1rem;
+        margin-top: 0.25rem;
+      }

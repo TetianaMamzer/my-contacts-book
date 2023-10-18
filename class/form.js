@@ -1,131 +1,141 @@
-import { users } from "./script.js";
-import { createTable } from "./table.js";
+import { app } from "./script.js";
 import { Validate } from "./validation.js";
 
 const valid = new Validate();
-const nameIsValid = document.querySelector(".name-valid");
-const emailIsValid = document.querySelector(".email-valid");
-const codeIsValid = document.querySelector(".code-valid");
 
-const form = document.forms.addUser;
-const name = form.elements.name;
-const email = form.elements.email;
-const code = form.elements.code;
+export class Form {
+  constructor() {
+    this.nameIsValid = document.querySelector(".name-valid");
+    this.emailIsValid = document.querySelector(".email-valid");
+    this.codeIsValid = document.querySelector(".code-valid");
 
-const applyForm = () => {
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    const valName = valid.validateName(name.value);
-    const valCode = valid.validateCode(code.value);
-    const valEmail = valid.validateEmail(email.value);
-    const modalText = document.querySelector('.modal-body');
+    this.form = document.forms.addUser;
+    this.name = this.form.elements.name;
+    this.email = this.form.elements.email;
+    this.code = this.form.elements.code;
+
+    this._loadEventListeners();
+
+  }
+   
+  _loadEventListeners() {
   
-    if (valName.result && valCode.result && valEmail.result) {
-      formHandle(event);
+    this.code.addEventListener("blur", this._codeBlurHandler.bind(this));
+    this.code.addEventListener("focus", this._codeFocusHandler.bind(this));
+    this.email.addEventListener("blur", this._emailBlurHandler.bind(this));
+    this.email.addEventListener("focus", this._emailFocusHandler.bind(this));
+    this.name.addEventListener("blur", this._nameBlurHandler.bind(this));
+    this.name.addEventListener("focus", this._nameFocusHandler.bind(this));
+    this.form.addEventListener("submit", this._formOnHandler.bind(this));
 
-      code.classList.remove("is-valid", "is-invalid");
-      codeIsValid.classList.remove("valid-feedback", "invalid-feedback");
-      name.classList.remove("is-valid", "is-invalid");
-      nameIsValid.classList.remove("valid-feedback", "invalid-feedback");
-      email.classList.remove("is-valid", "is-invalid");
-      emailIsValid.classList.remove("valid-feedback", "invalid-feedback");
-      modalText.innerText = "Perfectly! New contact added"
-    } else {
-      modalText.innerText = "Oops! Fill in all fields correctly!"
-    }
-  });
-
-  function formHandle(e) {
-    e.preventDefault();
-  
-   console.log(users)
-    // update
-    if (form.hasAttribute("data-id")) {
-      
-      users.updateUser({
-        id: form.getAttribute("data-id"),
-        name: form.elements.name.value,
-        email: form.elements.email.value,
-        code: form.elements.code.value,
-      });
-
-      form.removeAttribute("data-id");
-    } else {
-      // add
-      users.addUser({
-        name: form.elements.name.value,
-        email: form.elements.email.value,
-        code: form.elements.code.value,
-      })
-    }
-  
-    form.reset();
-    // logUsers();
-    createTable();
   }
 
-  code.addEventListener("blur", function () {
-    const resultValidation = valid.validateCode(code.value);
+   _codeBlurHandler() {
+    const resultValidation = valid.validateCode(this.code.value);
     if (resultValidation.result) {
-      code.classList.add("is-valid");
-      codeIsValid.classList.add("valid-feedback");
+      this.code.classList.add("is-valid");
+      this.codeIsValid.classList.add("valid-feedback");
     } else {
-      code.classList.add("is-invalid");
-      codeIsValid.classList.add("invalid-feedback");
+      this.code.classList.add("is-invalid");
+      this.codeIsValid.classList.add("invalid-feedback");
     }
-    codeIsValid.innerText = resultValidation.message;
-  });
+    this.codeIsValid.innerText = resultValidation.message;
+  }
   
-  code.addEventListener("focus", function () {
-    code.classList.remove("is-valid", "is-invalid");
-    codeIsValid.classList.remove("valid-feedback", "invalid-feedback");
-  });
+  _codeFocusHandler() {
+    this.code.classList.remove("is-valid", "is-invalid");
+    this.codeIsValid.classList.remove("valid-feedback", "invalid-feedback");
+  }
   
-  email.addEventListener("blur", function () {
-    const resultValidation = valid.validateEmail(email.value);
+  _emailBlurHandler() {
+    const resultValidation = valid.validateEmail(this.email.value);
     if (resultValidation.result) {
-      email.classList.add("is-valid");
-      emailIsValid.classList.add("valid-feedback");
+      this.email.classList.add("is-valid");
+      this.emailIsValid.classList.add("valid-feedback");
     } else {
-      email.classList.add("is-invalid");
-      emailIsValid.classList.add("invalid-feedback");
+      this.email.classList.add("is-invalid");
+      this.emailIsValid.classList.add("invalid-feedback");
     }
-    emailIsValid.innerText = resultValidation.message;
-  });
+    this.emailIsValid.innerText = resultValidation.message;
+  }
   
-  email.addEventListener("focus", function () {
-    email.classList.remove("is-valid", "is-invalid");
-    emailIsValid.classList.remove("valid-feedback", "invalid-feedback");
-  });
+  _emailFocusHandler() {
+    this.email.classList.remove("is-valid", "is-invalid");
+    this.emailIsValid.classList.remove("valid-feedback", "invalid-feedback");
+  }
 
-  name.addEventListener("blur", function () {
-    const resultValidation = valid.validateName(name.value);
+  _nameBlurHandler() {
+    const resultValidation = valid.validateName(this.name.value);
     if (resultValidation.result == true) {
-      name.classList.add("is-valid");
-      nameIsValid.classList.add("valid-feedback");
+      this.name.classList.add("is-valid");
+      this.nameIsValid.classList.add("valid-feedback");
     } else {
-      name.classList.add("is-invalid");
-      nameIsValid.classList.add("invalid-feedback");
+      this.name.classList.add("is-invalid");
+      this.nameIsValid.classList.add("invalid-feedback");
     }
-    nameIsValid.innerText = resultValidation.message;
-  });
+    this.nameIsValid.innerText = resultValidation.message;
+  }
   
-  name.addEventListener("focus", function () {
-    name.classList.remove("is-valid", "is-invalid");
-    nameIsValid.classList.remove("valid-feedback", "invalid-feedback");
-  });
+  _nameFocusHandler() {
+    console.log(this)
+    this.name.classList.remove("is-valid", "is-invalid");
+    this.nameIsValid.classList.remove("valid-feedback", "invalid-feedback");
+  }
+  
+  _formOnHandler(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      const valName = valid.validateName(this.name.value);
+      const valCode = valid.validateCode(this.code.value);
+      const valEmail = valid.validateEmail(this.email.value);
+      const modalText = document.querySelector('.modal-body');
+    
+      if (valName.result && valCode.result && valEmail.result) {
+        this.formHandle(event);
+  
+        this.code.classList.remove("is-valid", "is-invalid");
+        this.codeIsValid.classList.remove("valid-feedback", "invalid-feedback");
+        this.name.classList.remove("is-valid", "is-invalid");
+        this.nameIsValid.classList.remove("valid-feedback", "invalid-feedback");
+        this.email.classList.remove("is-valid", "is-invalid");
+        this.emailIsValid.classList.remove("valid-feedback", "invalid-feedback");
+        modalText.innerText = "Perfectly! New contact added"
+      } else {
+        modalText.innerText = "Oops! Fill in all fields correctly!"
+      }
+  }
+  
+    formHandle(e) {
+      e.preventDefault();
+      // update
+      if (this.form.hasAttribute("data-id")) {
+        
+        app.users.updateUser({
+          id: this.form.getAttribute("data-id"),
+          name: this.form.elements.name.value,
+          email: this.form.elements.email.value,
+          code: this.form.elements.code.value,
+        });
+  
+        this.form.removeAttribute("data-id");
+      } else {
+        // add
+        app.users.addUser({
+          name: this.form.elements.name.value,
+          email: this.form.elements.email.value,
+          code: this.form.elements.code.value,
+        })
+      }
+    
+      this.form.reset();
+      // logUsers();
+      app.table.createTable();
+    }
 
+    fillForm(currentUser) {
+      this.form.elements.name.value = currentUser.name;
+      this.form.elements.email.value = currentUser.email;
+      this.form.elements.code.value = currentUser.code;
+      this.form.setAttribute("data-id", currentUser.id);
+    }
 }
-
-function fillForm(currentUser) {
-  form.elements.name.value = currentUser.name;
-  form.elements.email.value = currentUser.email;
-  form.elements.code.value = currentUser.code;
-  form.setAttribute("data-id", currentUser.id);
-}
-export {
-  applyForm,
-  fillForm
-}
-

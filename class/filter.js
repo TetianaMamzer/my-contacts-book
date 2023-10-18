@@ -1,18 +1,21 @@
 import { debounce } from './library.js';
-import { users } from './script.js';
-import { createTable } from './table.js';
+import { app } from './script.js';
 
 export class Filter {
-  applyFilter() {
-    const search = document.querySelector('[type="search"]');
+  constructor() {
+    this._filterInput = document.querySelector('[type="search"]');
+    this._loadEventListenrs();
+    
+  }
+
+  _loadEventListenrs() {
+  this._filterInput.addEventListener('input', debounce(() => this._filterUsersHandler()));
+  }
   
-    search.addEventListener('input', debounce(() => filterUsersHandler()));
-    
-    function filterUsersHandler() {
-      let findeUsers = users.filterUsers(search.value);
-    
-      createTable(findeUsers);
-    }
+  _filterUsersHandler() {
+    let findeUsers = app.users.filterUsers(this._filterInput.value);
+  
+    app.table.createTable(findeUsers);
   }
 }
 
